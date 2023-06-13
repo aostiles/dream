@@ -46,7 +46,7 @@ let forget client_id =
   Hashtbl.remove clients client_id
 
 let send message =
-  Switch.run @@ fun sw ->
+  Switch.run @@ fun _sw ->
   Hashtbl.to_seq_values clients
   |> List.of_seq
   |> Fiber.List.iter (fun client ->

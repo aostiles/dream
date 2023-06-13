@@ -96,7 +96,7 @@ let show ?(prefix = "/") ?(method_ = `GET) target router =
     |> Dream.test ~prefix router
     |> fun response ->
       let body =
-        Eio_main.run @@ fun env ->
+        Eio_main.run @@ fun _env ->
         Dream.client_stream response
         |> Obj.magic (* TODO Needs to be replaced by exposing read_until_close
                              as a function on abstract streams. *)
@@ -105,8 +105,8 @@ let show ?(prefix = "/") ?(method_ = `GET) target router =
       let status = Dream.status response in
       Printf.printf "Response: %i %s\n"
         (Dream.status_to_int status) (Dream.status_to_string status);
-      if body <> "" then
-        Printf.printf "%s\n" body
+      let body_str = Eio.Promise.await_exn body in if body_str <> "" then
+        Printf.printf "%s\n" body_str
       else
         ()
   with Failure message ->

@@ -28,8 +28,8 @@ let () =
         Dream.html home);
 
     Dream.get "/websocket"
-      (fun request ->
-        Dream.websocket request (fun websocket ->
+      (fun _request ->
+        Dream.websocket (fun websocket ->
           match Dream.receive websocket with
           | Some "Hello?" ->
             Dream.send websocket "Good-bye!"

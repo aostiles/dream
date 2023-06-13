@@ -18,7 +18,7 @@ let address_to_string : Eio.Net.Sockaddr.stream -> string = function
   | `Tcp (address, port) ->
     let address =
       address
-      |> Eio_unix.Ipaddr.to_unix
+      |> Eio_unix.Net.Ipaddr.to_unix
     in
     Printf.sprintf "%s:%i" (Unix.string_of_inet_addr address) port
 

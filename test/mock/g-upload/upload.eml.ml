@@ -54,7 +54,7 @@ let () =
     `Await unresolved;
   ];
   Eio_mock.Net.on_listen net [`Return socket];
-  let env_mocked = object
+  let _env_mocked = object
     method clock = env#clock
     method secure_random = env#secure_random
     method net = net

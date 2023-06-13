@@ -65,6 +65,8 @@ let encrypt secret plaintext =
   |> Dream.to_base64url
 
 let%expect_test _ =
+Eio_main.run @@ fun env ->
+Mirage_crypto_rng_eio.run (module Mirage_crypto_rng.Fortuna) env @@ fun () ->
   Printf.printf "%B\n%!" (encrypt secret_1 "foo" = encrypt secret_1 "foo");
   [%expect {| false |}]
 
